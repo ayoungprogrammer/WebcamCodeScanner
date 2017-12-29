@@ -9,29 +9,26 @@ using namespace zbar;
 
 int main (int argc, char *argv[])
 {
-  VideoCapture cap(0); // open the video camera no. 0
+  VideoCapture cap(0); // open video capture device #0
 
   // cap.set(CV_CAP_PROP_FRAME_WIDTH,800);
   // cap.set(CV_CAP_PROP_FRAME_HEIGHT,640);
 
   if (!cap.isOpened()) // if not success, exit program
   {
-    cout << "Cannot open the video cam" << endl;
-    return -1;
+    cout << "Unable to open video capture device." << endl;
+    return EXIT_FAILURE;
   }
 
   ImageScanner scanner;
   scanner.set_config(ZBAR_NONE, ZBAR_CFG_ENABLE, 1);
 
-  double dWidth =
-      cap.get(CV_CAP_PROP_FRAME_WIDTH); // get the width of frames of the video
-  double dHeight = cap.get(
-      CV_CAP_PROP_FRAME_HEIGHT); // get the height of frames of the video
+  double dWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH); // get video frame width
+  double dHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT); // get video frame height
 
-  cout << "Frame size : " << dWidth << " x " << dHeight << endl;
+  cout << "Frame size: " << dWidth << " x " << dHeight << endl;
 
-  namedWindow("MyVideo", CV_WINDOW_AUTOSIZE); // create a window called
-                                              // "MyVideo"
+  namedWindow("Video", CV_WINDOW_AUTOSIZE); // create window
 
   while (1)
   {
@@ -39,7 +36,7 @@ int main (int argc, char *argv[])
 
     if (!cap.read(frame)) // read frame from video or break loop
     {
-      cout << "Cannot read a frame from video stream" << endl;
+      cout << "Unable to read frame from video stream." << endl;
       break;
     }
 
@@ -77,7 +74,7 @@ int main (int argc, char *argv[])
       // cout<<"Angle: "<<r.angle<<endl;
     }
 
-    imshow("MyVideo", frame); // show the frame in "MyVideo" window
+    imshow("Video", frame); // show the frame in "Video" window
 
     if (waitKey(30) == 27) // wait for 'esc' key press for 30ms. If 'esc' key is
                            // pressed, break loop
@@ -87,5 +84,5 @@ int main (int argc, char *argv[])
     }
   }
 
-  return 0;
+  return EXIT_SUCCESS;
 }
