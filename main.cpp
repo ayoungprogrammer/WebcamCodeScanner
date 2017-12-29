@@ -37,9 +37,7 @@ int main (int argc, char *argv[])
   {
     Mat frame;
 
-    bool bSuccess = cap.read(frame); // read a new frame from video
-
-    if (!bSuccess) // if not success, break loop
+    if (!cap.read(frame)) // read frame from video or break loop
     {
       cout << "Cannot read a frame from video stream" << endl;
       break;
